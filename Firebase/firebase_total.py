@@ -1,3 +1,7 @@
+# note that this file is not used anymore in the main implementation
+# It is only used as a reference, as the new database structure has changed, and it includes password based authentication.
+
+
 import firebase_admin
 from firebase_admin import db,storage,credentials
 import datetime
@@ -5,7 +9,7 @@ import sys
 sys.path.insert(1, 'Dr-Writely-Git/Dr_writely/pdf_convert')
 
 from Firebase.pdf import pdf_conv
-#from whisper import content_output, meds_arr
+from whisper import content_output, meds_arr
 
 
 cred = credentials.Certificate('C:/Users/gteja/Documents/Python/Dr-Writely-Git/Dr_writely/Firebase/credentials.json')

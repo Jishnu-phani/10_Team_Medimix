@@ -1,4 +1,4 @@
 # ignore all json files
 *.json
-
+node_modules/
 server.py

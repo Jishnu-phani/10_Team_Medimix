@@ -3,19 +3,44 @@ import './styles_login.css';
 
 const Logindone = () => {
   const [activeForm, setActiveForm] = useState(null);
-
+  const redirection = {
+    patient: 'http://localhost:3000/patient',
+    doctor: 'http://localhost:3000/record',
+    pharmacist: 'http://localhost:3000/pharmacist'
+  }
   const submitForm = async (formData) => {
     try {
-      const response = await fetch('/login', {
+      const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
       const result = await response.json();
       alert(result.message);
-      if (result.redirect) {
-        window.location.href = result.redirect;
+      console.log(redirection[formData.role]);
+      if (formData.role === 'patient') {
+        const sendPhone = await fetch("http://localhost:3000/patient", {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData.phone)
+        });
+        const sendPhoneResult = await sendPhone.json();
+        alert(sendPhoneResult.message)
+        window.location.href = redirection[formData.role];
       }
+      else if (formData.role === 'doctor') {
+        const sendPhone = await fetch("http://localhost:3000/doctor", {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData.phone)
+        });
+        const sendPhoneResult = await sendPhone.json();
+        alert(sendPhoneResult.message)
+        window.location.href = redirection[formData.role];
+      }
+        // window.location.href = redirection[formData.role]+"/"+formData.phone;
+      else 
+        window.location.href = redirection[formData.role];
     } catch (error) {
       alert('Error submitting form');
     }
@@ -25,7 +50,7 @@ const Logindone = () => {
     e.preventDefault();
     const formData = {
       role: 'patient',
-      phoneno: e.target.phoneno.value,
+      phone: e.target.phoneno.value,
       password: e.target.password.value
     };
     submitForm(formData);
@@ -35,7 +60,7 @@ const Logindone = () => {
     e.preventDefault();
     const formData = {
       role: 'doctor',
-      phoneno: e.target.phoneno.value,
+      phone: e.target.phoneno.value,
       password: e.target.password.value
     };
     submitForm(formData);
@@ -45,7 +70,7 @@ const Logindone = () => {
     e.preventDefault();
     const formData = {
       role: 'pharmacist',
-      phoneno: e.target.phoneno.value,
+      phone: e.target.phoneno.value,
       password: e.target.password.value
     };
     submitForm(formData);

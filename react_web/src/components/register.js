@@ -5,19 +5,20 @@ const Registration = () => {
   const [activeForm, setActiveForm] = useState(null);
 
   const submitForm = async (formData) => {
-    // try {
-    //   const response = await fetch('/register', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(formData)
-    //   });
-    //   const result = await response.json();
-    //   alert(result.message);
-    // //   if (result.redirect) navigate('/login');
-    // } catch (error) {
-    //   alert('Error submitting form');
-    // }
-    window.location.href = 'http://localhost:3000/login';
+    try {
+      const response = await fetch('http://localhost:5000/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const result = await response.json();
+      alert(result.message);
+      window.location.href = 'http://localhost:3000/login';
+    } catch (error) {
+      alert('Error submitting form');
+    }
+    alert(JSON.stringify(formData));
+    
   };
 
   const handlePatientSubmit = (e) => {
@@ -25,7 +26,7 @@ const Registration = () => {
     const formData = {
       role: 'patient',
       email: e.target.email.value,
-      phoneno: e.target.phoneno.value,
+      phone: e.target.phoneno.value,
       gender: e.target.gender.value,
       name: e.target.name.value,
       dob: e.target.dob.value,
@@ -39,7 +40,7 @@ const Registration = () => {
     const formData = {
       role: 'doctor',
       email: e.target.email.value,
-      phoneno: e.target.phoneno.value,
+      phone: e.target.phoneno.value,
       name: e.target.name.value,
       location: e.target.location.value,
       password: e.target.password.value
@@ -52,7 +53,7 @@ const Registration = () => {
     const formData = {
       role: 'pharmacist',
       email: e.target.email.value,
-      phoneno: e.target.phoneno.value,
+      phone: e.target.phoneno.value,
       name: e.target.name.value,
       location: e.target.location.value,
       password: e.target.password.value

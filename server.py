@@ -1,18 +1,20 @@
 from flask import Flask, render_template, request, jsonify
 import os
+from flask_cors import CORS
 #import openai
 
 import firebase_admin
 from firebase_admin import db,storage,credentials
 import datetime
 import sys
-sys.path.insert(1, 'Dr-Writely-Git/Dr_writely/pdf_convert')
+from Firebase.pdf import pdf_conv
+from Firebase.firebase_stuff import create_doctor_account, upload_pdf_to_bucket, download_prescription, login_firebase
+#from Firebase.pharmacist import pharmacist
+from Firebase.register_firebase import registration
 
-# from pdf import pdf_conv
-# from whisper import content_output, meds_arr
 
 
-cred = credentials.Certificate('C:/Users/gteja/Documents/Python/Dr-Writely-Git/Dr_writely/Firebase/credentials.json')
+cred = credentials.Certificate('Firebase/credentials_new.json')
 firebase_admin.initialize_app(
     cred,
     {'databaseURL' : 'https://dr-writely-default-rtdb.asia-southeast1.firebasedatabase.app/','storageBucket': 'dr-writely.appspot.com'}
@@ -21,6 +23,7 @@ firebase_admin.initialize_app(
 bucket = storage.bucket()
 
 app = Flask(__name__)
+CORS(app)
 
 # Set your OpenAI API key
 #openai.api_key = ''
@@ -29,17 +32,24 @@ app = Flask(__name__)
 def home():
     return render_template('home.html')
 
-@app.route('/record')
-def record():
-    return render_template('record.html')
+@app.route('/login',methods=['POST','GET'])
+def login():
+    data = request.get_json()
+    res = login_firebase(db,data)
+    if res == 1:
+        return jsonify({'status':200,'message':'OK'})
+    elif res == 0:
+        return jsonify({'status':404,'message':'User not found'})
+    else:
+        return jsonify({'status':401,'message':'Incorrect password'})
 
-@app.route('/register_doctor')
+@app.route('/register', methods=['POST','GET'])
 def register_doctor():
-    return render_template('register_doctor.html')
+    data = request.get_json()
+    print(data)
+    registration(data,db)
+    return jsonify({'status':200,'message':'OK'})
 
-@app.route('/register_patient')
-def register_patient():
-    return render_template('register_patient.html')
 
 @app.route('/upload_audio', methods=['POST'])
 def upload_audio():
@@ -104,5 +114,15 @@ def save_transcript():
     return jsonify({'message': 'Transcript saved successfully'})
 
 
+@app.route('/test',methods=['GET','POST'])
+def test():
+    data = request.get_json()
+    print(data)
+    return jsonify({'message':'Test successful'})
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port = 5000)
+
+
+

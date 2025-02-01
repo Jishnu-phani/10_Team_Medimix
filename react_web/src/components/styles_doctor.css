@@ -1,0 +1,66 @@
+/* Container Styles */
+.doctor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 80%;
+    max-width: 800px;
+    margin: 1.25rem auto;
+    padding: 1rem;
+}
+
+/* Card Styles */
+.doctor-card {
+    background-color: #ffffff;
+    border-radius: 0.625rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.doctor-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Text Styles */
+.doctor-name {
+    margin: 0 0 1rem 0;
+    color: #2d3748;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.doctor-detail {
+    margin: 0.75rem 0;
+    color: #4a5568;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.doctor-detail strong {
+    color: #2d3748;
+    font-weight: 600;
+    margin-right: 0.5rem;
+}
+
+/* Button Styles */
+.doctor-button {
+    display: inline-block;
+    padding: 0.625rem 1.25rem;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 0.375rem;
+    background-color: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.doctor-button:hover {
+    background-color: #0056b3;
+}

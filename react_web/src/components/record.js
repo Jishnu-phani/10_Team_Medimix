@@ -14,7 +14,7 @@ const DoctorPage = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [transcription, setTranscription] = useState("");
   const [doctorName, setDoctorName] = useState("");
-  const [patientName, setPatientName] = useState("");
+  const [patientphno, setpatientphno] = useState("");
 
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
@@ -59,10 +59,10 @@ const DoctorPage = () => {
     const formData = new FormData();
     formData.append("audio", audioBlob, "recording.mp3");
     formData.append("doctorName", doctorName);
-    formData.append("patientName", patientName);
+    formData.append("patientphno", patientphno);
 
     try {
-      const response = await fetch("/upload_audio", {
+      const response = await fetch("http://localhost:5000/upload_audio", {
         method: "POST",
         body: formData,
       });
@@ -79,7 +79,7 @@ const DoctorPage = () => {
     formData.append("audio", audioBlob, "recording.mp3");
 
     try {
-      const response = await fetch("/transcribe_audio", {
+      const response = await fetch("http://localhost:5000/transcribe_audio", {
         method: "POST",
         body: formData,
       });
@@ -100,14 +100,14 @@ const DoctorPage = () => {
 
   const saveTranscript = async () => {
     try {
-      const response = await fetch("/save_transcript", {
+      const response = await fetch("http://localhost:5000/save_transcript", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           doctorName,
-          patientName,
+          patientphno,
           transcript: transcription,
         }),
       });
@@ -135,8 +135,8 @@ const DoctorPage = () => {
         type="text"
         placeholder="Enter patient Phone Number"
         className="record-text-field"
-        value={patientName}
-        onChange={(e) => setPatientName(e.target.value)}
+        value={patientphno}
+        onChange={(e) => setpatientphno(e.target.value)}
         required
       />
 
