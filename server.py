@@ -23,7 +23,7 @@ bucket = storage.bucket()
 app = Flask(__name__)
 
 # Set your OpenAI API key
-#openai.api_key = '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'
+#openai.api_key = ''
 
 @app.route('/')
 def home():
