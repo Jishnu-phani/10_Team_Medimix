@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_patient_records.css') }}">
+</head>
+<body>
+    <div class="container">
+        {% for record in data %}
+        <div class="card">
+            <h2>{{ record.name }}</h2>
+            <p><strong>Date:</strong> {{ record.date }}</p>
+            <p><strong>Diagnosis:</strong> {{ record.diagnosis }}</p>
+            <p><strong>Medication:</strong> {{ record.medication }}</p>
+            <a href="{{ record.pdf_url }}" class="button" download>Download PDF</a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
