@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Patient</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_register_patient.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Register as Patient</h1>
+        <form>
+            <input type="text" placeholder="Name" class="text-field" required>
+            <input type="number" placeholder="Age" class="text-field" required>
+            <input type="text" placeholder="Gender" class="text-field" required>
+            <input type="email" placeholder="Email" class="text-field" required>
+            <input type="tel" placeholder="Phone Number" class="text-field" required>
+            <button type="submit" class="button">Register</button>
+        </form>
+    </div>
+</body>
+</html>

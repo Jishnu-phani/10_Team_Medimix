@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Doctor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_register_doctor.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Register as Doctor</h1>
+        <form>
+            <input type="text" placeholder="Name" class="text-field" required>
+            <input type="tel" placeholder="Phone Number" class="text-field" required>
+            <input type="email" placeholder="Email" class="text-field" required>
+            <input type="text" placeholder="Clinic/Hospital" class="text-field" required>
+            <input type="text" placeholder="Degree" class="text-field" required>
+            <input type="text" placeholder="Specialization" class="text-field" required>
+            <button type="submit" class="button">Register</button>
+        </form>
+    </div>
+</body>
+</html>

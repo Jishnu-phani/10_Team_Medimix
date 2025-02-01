@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pop-Up with Editable Text Field</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    /* Button style */
+    .open-popup-btn {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Popup background overlay */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    /* Popup box */
+    .popup-box {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      z-index: 1001;
+    }
+
+    /* Close button */
+    .close-popup-btn {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      float: right;
+    }
+
+    .close-popup-btn:hover {
+      background: #e63939;
+    }
+
+    /* Editable text field */
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: none;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <button class="open-popup-btn">Open Pop-Up</button>
+
+  <!-- Popup HTML -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-box">
+      <button class="close-popup-btn" id="closePopupBtn">X</button>
+      <h3>Edit Text</h3>
+      <textarea id="editableText" placeholder="Type something here..."></textarea>
+    </div>
+  </div>
+
+  <script>
+    // Get elements
+    const openPopupBtn = document.querySelector('.open-popup-btn');
+    const closePopupBtn = document.querySelector('#closePopupBtn');
+    const popupOverlay = document.querySelector('#popupOverlay');
+    const editableText = document.querySelector('#editableText');
+
+    // Default text to populate the textarea
+    let initialText = "This is the default text.";
+    let editedText = "";
+
+    // Open popup and populate textarea
+    openPopupBtn.addEventListener('click', () => {
+      editableText.value = initialText; // Set the initial text
+      popupOverlay.style.display = 'block';
+    });
+
+    // Close popup and retrieve edited text
+    closePopupBtn.addEventListener('click', () => {
+      editedText = editableText.value; // Retrieve the edited text
+      popupOverlay.style.display = 'none';
+      console.log("Edited Text:", editedText); // Log the edited text
+    });
+
+    // Close popup when clicking outside the box
+    popupOverlay.addEventListener('click', (event) => {
+      if (event.target === popupOverlay) {
+        editedText = editableText.value; // Retrieve the edited text
+        popupOverlay.style.display = 'none';
+        console.log("Edited Text:", editedText); // Log the edited text
+      }
+    });
+  </script>
+</body>
+</html>
