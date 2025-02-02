@@ -2,7 +2,7 @@ import openai
 from Firebase.pdf import pdf_conv
 
 # Set your OpenAI API key
-# openai.api_key = ''
+openai.api_key = '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'
 
 def formatting(transcription_text):
     response = openai.ChatCompletion.create(

@@ -9,12 +9,12 @@ from firebase_admin import db,storage,credentials
 import datetime
 import sys
 from Firebase.pdf import pdf_conv
-from Firebase.firebase_stuff import create_doctor_account, upload_pdf_to_bucket, download_prescription, login_firebase
+from Firebase.firebase_stuff import create_doctor_account, upload_pdf_to_bucket, download_prescription, login_firebase, delete_pharm
 #from Firebase.pharmacist import pharmacist
 from Firebase.register_firebase import registration
 from Firebase.text_formatting import formatting
 from transformers import pipeline
-from Firebase.fetch_records import get_doctor,get_patient
+from Firebase.fetch_records import get_doctor,get_patient, get_pharmacist
 
 device = 0
 pipe = pipeline(model='Bhaveen/500medimix', device=device,return_timestamps=True)
@@ -58,15 +58,30 @@ def register_doctor():
 
 @app.route('/get_doctor_data/<phno>',methods=['POST','GET'])
 def get_doctor_data(phno):
-    data = get_doctor_data(phno,db)
+    data = get_doctor(phno,db)
+    print(data)
+    return jsonify({"data":data,"status":200})
+
+@app.route('/get_pharmacistx',methods=['POST','GET'])
+def get_pharmacistx():
+    data = get_pharmacist(db)
     return jsonify(data)
 
-@app.route('/get_patient_data/<phno>',methods=['POST','GET'])
-def get_patient_data(phno):
-    data = get_patient_data(phno,db)
+@app.route('/download_pdf/<appt>', methods = ['POST', 'GET'])
+def download_pdf(appt):
+    download_prescription(appt,bucket)
+    return jsonify({'message':'OK','status':200})
+        
+
+@app.route('/get_patient_datax/<phno>',methods=['POST','GET'])
+def get_patient_datax(phno):
+    data = get_patient(phno,db)
     return jsonify(data)
 
-@app.route('/get_pharmacist/',methods=['POST','GET'])
+@app.route('/mark_as_delivered/<name>',methods=['POST','GET'])
+def mark_as_delivered(name):
+    delete_pharm(name,db)
+    return jsonify({'message':'OK','status':200})
 
 @app.route('/upload_audio', methods=['POST'])
 def upload_audio():

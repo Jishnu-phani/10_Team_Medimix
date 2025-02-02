@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
+
 import './styles_login.css';
+
 
 const Logindone = () => {
   const [activeForm, setActiveForm] = useState(null);
   const redirection = {
-    patient: 'http://localhost:3000/patient',
-    doctor: 'http://localhost:3000/record',
-    pharmacist: 'http://localhost:3000/pharmacist'
+    patient: '/patient',         //http://localhost:3000
+    doctor: '/record',
+    pharmacist: '/pharmacist'
   }
   const submitForm = async (formData) => {
     try {
+      localStorage.setItem('phone',formData.phone);
       const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -18,24 +21,8 @@ const Logindone = () => {
       const result = await response.json();
       alert(result.message);
       console.log(redirection[formData.role]);
-      if (formData.role === 'patient') {
-        const sendPhone = await fetch("http://localhost:3000/patient", {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData.phone)
-        });
-        const sendPhoneResult = await sendPhone.json();
-        alert(sendPhoneResult.message)
-        window.location.href = redirection[formData.role];
-      }
-      else if (formData.role === 'doctor') {
-        const sendPhone = await fetch("http://localhost:3000/doctor", {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData.phone)
-        });
-        const sendPhoneResult = await sendPhone.json();
-        alert(sendPhoneResult.message)
+      
+      if ((formData.role === 'patient') | (formData.role === 'doctor') ){
         window.location.href = redirection[formData.role];
       }
         // window.location.href = redirection[formData.role]+"/"+formData.phone;

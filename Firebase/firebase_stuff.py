@@ -44,6 +44,11 @@ def login_firebase(db,data):
     else:
         return 0
     
+def delete_pharm(name,db):
+    ref = db.reference(f'Pharm/{name}')
+    ref.set('')
+    return
+    
 
         
     
