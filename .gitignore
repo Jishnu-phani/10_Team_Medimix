@@ -2,3 +2,4 @@
 *.json
 node_modules/
 server.py
+credentials_new.json
